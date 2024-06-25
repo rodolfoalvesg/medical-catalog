@@ -1,6 +1,7 @@
 package config
 
 import (
+	"strconv"
 	"time"
 
 	"github.com/kelseyhightower/envconfig"
@@ -13,12 +14,21 @@ type Loader interface {
 
 type Config struct {
 	HTTP HTTPConfig
+	DB   DBConfig
 }
 
 type HTTPConfig struct {
 	Address      string        `envconfig:"HTTP_ADDRESS" default:":3000"`
 	ReadTimeout  time.Duration `envconfig:"HTTP_READ_TIMEOUT" default:"5s"`
 	WriteTimeout time.Duration `envconfig:"HTTP_WRITE_TIMEOUT" default:"10s"`
+}
+
+type DBConfig struct {
+	Host     string `envconfig:"DB_HOST" default:"localhost"`
+	Port     int    `envconfig:"DB_PORT" default:"5432"`
+	User     string `envconfig:"DB_USER" default:"postgres"`
+	Password string `envconfig:"DB_PASSWORD" default:"postgres"`
+	Database string `envconfig:"DB_DATABASE" default:"postgres"`
 }
 
 func LoadConfig() (*Config, error) {
@@ -32,4 +42,10 @@ func LoadConfig() (*Config, error) {
 	}
 
 	return cfg, nil
+}
+
+func (c *DBConfig) ConnectionString() string {
+	port := strconv.FormatInt(int64(c.Port), 10)
+
+	return "host=" + c.Host + " port=" + port + " user=" + c.User + " password=" + c.Password + " dbname=" + c.Database
 }

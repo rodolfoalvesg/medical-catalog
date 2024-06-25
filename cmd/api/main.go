@@ -3,6 +3,9 @@ package main
 import (
 	"back-platform/app/config"
 	httpServer "back-platform/app/gateway/http"
+	"context"
+
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 func main() {
@@ -11,7 +14,16 @@ func main() {
 		panic(err)
 	}
 
-	httpSrv, err := httpServer.NewServer(*cfg)
+	ctx := context.Background()
+
+	pgxPool, err := pgxpool.New(ctx, cfg.DB.ConnectionString())
+	if err != nil {
+		panic(err)
+	}
+
+	defer pgxPool.Close()
+
+	httpSrv, err := httpServer.NewServer(*cfg, pgxPool)
 	if err != nil {
 		panic(err)
 	}

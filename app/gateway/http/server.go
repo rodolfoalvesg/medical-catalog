@@ -3,10 +3,12 @@ package http
 import (
 	"back-platform/app/config"
 	"net/http"
+
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func NewServer(cfg config.Config) (*http.Server, error) {
-	handler, err := newHandler(cfg)
+func NewServer(cfg config.Config, pgxPool *pgxpool.Pool) (*http.Server, error) {
+	handler, err := newHandler(cfg, pgxPool)
 	if err != nil {
 		return nil, err
 	}
