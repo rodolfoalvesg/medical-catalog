@@ -9,6 +9,8 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 // CreateUser creates a new user.
@@ -34,10 +36,19 @@ func (h Handler) CreateUser(r *http.Request) responses.Response {
 		return responses.BadRequest(fmt.Errorf("%s: %w", operation, err), "invalid request body")
 	}
 
+	if req.UserName == "" || req.Email == "" || req.Password == "" {
+		return responses.BadRequest(nil, "missing required fields")
+	}
+
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return responses.InternalServerError(fmt.Errorf("%s: %w", operation, err))
+	}
+
 	input := usecases.CreateUserInput{
 		Username: req.UserName,
 		Email:    req.Email,
-		Password: req.Password,
+		Password: string(hashedPassword),
 	}
 
 	if err := h.usecase.CreateUser(r.Context(), input); err != nil {
