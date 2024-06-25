@@ -5,6 +5,6 @@ import (
 	"context"
 )
 
-type UserRepository struct {
-	CreateUser func(ctx context.Context, input usecases.CreateUserInput) error
+type UserRepository interface {
+	CreateUser(ctx context.Context, input usecases.CreateUserInput) error
 }

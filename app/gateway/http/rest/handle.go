@@ -11,8 +11,6 @@ func Handle(handler func(r *http.Request) responses.Response) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		response := handler(r)
 
-		fmt.Print("Response: ", response)
-
 		if response.Error != nil {
 			http.Error(w, response.Error.Error(), response.Status)
 			return

@@ -3,9 +3,12 @@ package http
 import (
 	"back-platform/app/config"
 	specialtyUsecase "back-platform/app/domain/usecases/specialty"
+	userUsecase "back-platform/app/domain/usecases/user"
 	specialtyRepository "back-platform/app/gateway/http/db/specialty"
+	userRepository "back-platform/app/gateway/http/db/user"
 	"back-platform/app/gateway/http/rest"
 	specialtyHandler "back-platform/app/gateway/http/specialty"
+	"back-platform/app/gateway/http/user"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -41,9 +44,19 @@ func newHandler(_ config.Config, db *pgxpool.Pool) (http.Handler, error) {
 	specialtyUsecase := specialtyUsecase.NewUsecase(specialtyRepo)
 	specialtyHandler := specialtyHandler.NewHandler(specialtyUsecase)
 
+	userRepo := userRepository.NewRepository(db)
+	userUsecase := userUsecase.NewUsecase(userRepo)
+	userHandler := user.NewHandler(userUsecase)
+
 	r.Route("/admin/v1/medical-catalog", func(r chi.Router) {
 		r.Route("/specialties", func(r chi.Router) {
 			r.Post("/", rest.Handle(specialtyHandler.CreateSpecialty))
+		})
+	})
+
+	r.Route("/service/v1/medical-catalog", func(r chi.Router) {
+		r.Route("/admin/user", func(r chi.Router) {
+			r.Post("/", rest.Handle(userHandler.CreateUser))
 		})
 	})
 
