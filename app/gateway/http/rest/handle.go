@@ -20,22 +20,22 @@ func Handle(handler func(r *http.Request) responses.Response) http.HandlerFunc {
 			copyHeaders(w, h)
 		}
 
-		if err := sendJSON(w, response.Payload, response.Status); err != nil {
+		if err := sendJSON(w, response); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 	}
 }
 
-func sendJSON(w http.ResponseWriter, payload interface{}, status int) error {
-	if payload == nil {
-		w.WriteHeader(status)
+func sendJSON(w http.ResponseWriter, resp responses.Response) error {
+	if resp.Payload == nil {
+		w.WriteHeader(resp.Status)
 		return nil
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(status)
+	w.WriteHeader(resp.Status)
 
-	if err := json.NewEncoder(w).Encode(payload); err != nil {
+	if err := json.NewEncoder(w).Encode(resp.Payload); err != nil {
 		return fmt.Errorf("failed to encode response: %w", err)
 	}
 

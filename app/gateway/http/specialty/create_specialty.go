@@ -3,9 +3,9 @@ package specialty
 import (
 	"back-platform/app/domain/entities/specialty"
 	"back-platform/app/domain/usecases"
+	"back-platform/app/gateway/http/rest/requests"
 	"back-platform/app/gateway/http/rest/responses"
 	"back-platform/app/gateway/http/specialty/schema"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -28,8 +28,12 @@ func (h Handler) CreateSpecialty(r *http.Request) responses.Response {
 	const operation = "SpecialtyHandler.CreateSpecialty"
 
 	var req schema.CreateSpecialtyInput
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		return responses.BadRequest(fmt.Errorf("%s: %w", operation, err), "invalid request body")
+	if err := requests.DecodeBodyJSON(r, &req); err != nil {
+		return responses.BadRequest(fmt.Errorf("%s: %w", operation, err), "invalid body json")
+	}
+
+	if req.SpecialtyName == "" {
+		return responses.BadRequest(fmt.Errorf("%s: %w", operation, specialty.ErrSpecialtyIsEmpty), "specialty name is empty")
 	}
 
 	subjectID := "7e8d250e-3301-11ef-ac6b-a370833da639"
