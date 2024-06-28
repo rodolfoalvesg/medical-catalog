@@ -7,6 +7,11 @@ type LoginUsecase interface {
 }
 
 type SignInInput struct {
-	Username string
+	Email    string
 	Password string
+}
+
+type SignInOutput struct {
+	Name     string
+	PublicID string
 }

@@ -6,5 +6,6 @@ import (
 )
 
 type LoginRepository interface {
-	SignIn(ctx context.Context, input usecases.SignInInput) (string, error)
+	GetPasswd(ctx context.Context, userID, password string) error
+	GetUser(ctx context.Context, email string) (usecases.SignInOutput, error)
 }
