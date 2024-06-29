@@ -7,6 +7,81 @@
     },
     "basePath": "/",
     "paths": {
+        "/admin/v1/medical-catalog/categories": {
+            "post": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
+                "description": "Create a new category\nOtherwise it will return HTTP status code 409.",
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Create a new category",
+                "parameters": [
+                    {
+                        "description": "Category input",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.CreateCategoryInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category created successfully",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Category already exists",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/admin/v1/medical-catalog/login/signin": {
             "post": {
                 "description": "Create a new login to access the system.",
@@ -229,6 +304,14 @@
         }
     },
     "definitions": {
+        "schema.CreateCategoryInput": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
         "schema.CreateSpecialtyInput": {
             "type": "object",
             "properties": {
