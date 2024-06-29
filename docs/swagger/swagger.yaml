@@ -1,5 +1,10 @@
 basePath: /
 definitions:
+  schema.CreateCategoryInput:
+    properties:
+      name:
+        type: string
+    type: object
   schema.CreateSpecialtyInput:
     properties:
       specialtyName:
@@ -26,6 +31,56 @@ info:
   title: Medical Catalog API
   version: "1.0"
 paths:
+  /admin/v1/medical-catalog/categories:
+    post:
+      description: |-
+        Create a new category
+        Otherwise it will return HTTP status code 409.
+      parameters:
+      - description: Category input
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/schema.CreateCategoryInput'
+      responses:
+        "200":
+          description: Category created successfully
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+        "400":
+          description: Invalid request body
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+        "409":
+          description: Category already exists
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+      security:
+      - BearerToken: []
+      summary: Create a new category
+      tags:
+      - Category
   /admin/v1/medical-catalog/login/signin:
     post:
       description: Create a new login to access the system.
