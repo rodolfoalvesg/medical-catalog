@@ -1,0 +1,181 @@
+basePath: /
+definitions:
+  schema.CreateSpecialtyInput:
+    properties:
+      specialtyName:
+        type: string
+    type: object
+  schema.CreateUserInput:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  schema.SignInInput:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+info:
+  contact: {}
+  title: Medical Catalog API
+  version: "1.0"
+paths:
+  /admin/v1/medical-catalog/login/signin:
+    post:
+      description: Create a new login to access the system.
+      parameters:
+      - description: Login input
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SignInInput'
+      responses:
+        "200":
+          description: Login successfully
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+        "400":
+          description: Invalid request body
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+        "401":
+          description: Invalid email or password
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+      summary: Create a new login
+      tags:
+      - Login
+  /admin/v1/medical-catalog/specialties:
+    post:
+      description: |-
+        Create a new specialty
+        Otherwise it will return HTTP status code 409.
+      parameters:
+      - description: Specialty input
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/schema.CreateSpecialtyInput'
+      responses:
+        "200":
+          description: Specialty created successfully
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+        "400":
+          description: Invalid request body
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+        "409":
+          description: Specialty already exists
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+      security:
+      - BearerToken: []
+      summary: Create a new specialty
+      tags:
+      - Specialty
+  /service/v1/medical-catalog/users:
+    post:
+      description: |-
+        Create a new user to access the system.
+        Otherwise it will return HTTP status code 409.
+      parameters:
+      - description: User input
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/schema.CreateUserInput'
+      responses:
+        "200":
+          description: User created successfully
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+        "400":
+          description: Invalid request body
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+        "409":
+          description: User already exists
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+      security:
+      - BearerToken: []
+      summary: Create a new user
+      tags:
+      - User
+securityDefinitions:
+  BearerToken:
+    description: This is a medical catalog API.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -5,6 +5,8 @@ import (
 	httpServer "back-platform/app/gateway/http"
 	"context"
 
+	_ "back-platform/docs/swagger"
+
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 

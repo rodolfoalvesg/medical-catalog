@@ -15,19 +15,17 @@ import (
 
 // CreateUser creates a new user.
 // @Summary Create a new user
-// @Description Create a new user
+// @Description Create a new user to access the system.
+// @Description Otherwise it will return HTTP status code 409.
 // @Tags User
-// @Accept json
-// @Produce json
-// @Param input body CreateUserInput true "User input"
-// @Success 201 {object} string
-// @Failure 400 {object} string
-// @Failure 409 {object} string
-// @Failure 500 {object} string
-// @Router /service/v1/medical-catalog/admin/user [post]
-// @Security BasicAuth
-
-// Header all {string} RequestID x-request-id
+// @Security BearerToken
+// @Param Body body schema.CreateUserInput true "User input"
+// @Success 200 {object} string "User created successfully"
+// @Failure 400 {object} string "Invalid request body"
+// @Failure 409 {object} string "User already exists"
+// @Failure 500 {object} string "Internal server error"
+// @Header all {string} RequestID "x-request-id"
+// @Router /service/v1/medical-catalog/users [post]
 func (h Handler) CreateUser(r *http.Request) responses.Response {
 	const operation = "UserHandler.CreateUser"
 

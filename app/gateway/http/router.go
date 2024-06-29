@@ -18,16 +18,16 @@ import (
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
-// newHandler creates a new http.Handler with the routes configured
-// @title Back Platform API for Medical Catalog
+// newHandler creates a new HTTP handler.
+// @title Medical Catalog API
 // @version 1.0
-// @description This is the API for the Back Platform Medical Catalog
-// @host localhost:3000
 // @BasePath /
-
-// @securityDefinitions.apiKey Bearer Token
+//
+// @securityDefinitions.apikey BearerToken
 // @in header
 // @name Authorization
+//
+// @description This is a medical catalog API.
 func newHandler(_ config.Config, db *pgxpool.Pool) (http.Handler, error) {
 	r := chi.NewRouter()
 
