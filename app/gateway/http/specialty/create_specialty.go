@@ -11,19 +11,19 @@ import (
 	"net/http"
 )
 
-// CreateSpecialty creates a new specialty
+// CreateSpecialty creates a new specialty.
 // @Summary Create a new specialty
 // @Description Create a new specialty
+// @Description Otherwise it will return HTTP status code 409.
 // @Tags Specialty
-// @Accept json
-// @Produce json
-// @Param input body CreateSpecialtyInput true "Specialty input"
-// @Success 201 {object} string
-// @Failure 400 {object} string
-// @Failure 500 {object} string
-// @Router /api/v1/medical-catalog/specialties [post]
-
-// Header all {string} RequestID x-request-id
+// @Security BearerToken
+// @Param Body body schema.CreateSpecialtyInput true "Specialty input"
+// @Success 200 {object} string "Specialty created successfully"
+// @Failure 400 {object} string "Invalid request body"
+// @Failure 409 {object} string "Specialty already exists"
+// @Failure 500 {object} string "Internal server error"
+// @Header all {string} RequestID "x-request-id"
+// @Router /admin/v1/medical-catalog/specialties [post]
 func (h Handler) CreateSpecialty(r *http.Request) responses.Response {
 	const operation = "SpecialtyHandler.CreateSpecialty"
 

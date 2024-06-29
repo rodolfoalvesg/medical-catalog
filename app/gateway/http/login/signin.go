@@ -10,21 +10,17 @@ import (
 	"net/http"
 )
 
-// SignIn signs in a user.
-// @Summary Sign in a user
-// @Description Sign in a user
+// SignIn creates a new login.
+// @Summary Create a new login
+// @Description Create a new login to access the system.
 // @Tags Login
-// @Accept json
-// @Produce json
-// @Param input body SignInInput true "Sign in input"
-// @Success 200 {object} string
-// @Failure 400 {object} string
-// @Failure 401 {object} string
-// @Failure 500 {object} string
-// @Router /service/v1/medical-catalog/login [post]
-
-// Header all {string} RequestID x-request-id
-
+// @Param Body body schema.SignInInput true "Login input"
+// @Success 200 {object} string "Login successfully"
+// @Failure 400 {object} string "Invalid request body"
+// @Failure 401 {object} string "Invalid email or password"
+// @Failure 500 {object} string "Internal server error"
+// @Header all {string} RequestID "x-request-id"
+// @Router /admin/v1/medical-catalog/login/signin [post]
 func (h Handler) SignIn(r *http.Request) responses.Response {
 	const operation = "LoginHandler.SignIn"
 

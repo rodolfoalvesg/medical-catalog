@@ -1,0 +1,274 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Medical Catalog API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "basePath": "/",
+    "paths": {
+        "/admin/v1/medical-catalog/login/signin": {
+            "post": {
+                "description": "Create a new login to access the system.",
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Create a new login",
+                "parameters": [
+                    {
+                        "description": "Login input",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.SignInInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successfully",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid email or password",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/v1/medical-catalog/specialties": {
+            "post": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
+                "description": "Create a new specialty\nOtherwise it will return HTTP status code 409.",
+                "tags": [
+                    "Specialty"
+                ],
+                "summary": "Create a new specialty",
+                "parameters": [
+                    {
+                        "description": "Specialty input",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.CreateSpecialtyInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Specialty created successfully",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Specialty already exists",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/service/v1/medical-catalog/users": {
+            "post": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
+                "description": "Create a new user to access the system.\nOtherwise it will return HTTP status code 409.",
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a new user",
+                "parameters": [
+                    {
+                        "description": "User input",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.CreateUserInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User created successfully",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "User already exists",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "schema.CreateSpecialtyInput": {
+            "type": "object",
+            "properties": {
+                "specialtyName": {
+                    "type": "string"
+                }
+            }
+        },
+        "schema.CreateUserInput": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "schema.SignInInput": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BearerToken": {
+            "description": "This is a medical catalog API.",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}
