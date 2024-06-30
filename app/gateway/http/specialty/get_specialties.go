@@ -2,6 +2,7 @@ package specialty
 
 import (
 	"back-platform/app/gateway/http/rest/responses"
+	"back-platform/app/gateway/http/specialty/schema"
 	"fmt"
 	"net/http"
 )
@@ -14,5 +15,5 @@ func (h Handler) GetSpecialties(r *http.Request) responses.Response {
 		return responses.InternalServerError(fmt.Errorf("%s: %w", operation, err))
 	}
 
-	return responses.Ok(specialties)
+	return responses.Ok(schema.MapToGetSpecialtiesResponse(specialties))
 }

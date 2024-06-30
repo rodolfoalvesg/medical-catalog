@@ -27,7 +27,7 @@ import (
 func (h Handler) CreateSpecialty(r *http.Request) responses.Response {
 	const operation = "SpecialtyHandler.CreateSpecialty"
 
-	var req schema.CreateSpecialtyInput
+	var req schema.CreateSpecialtyRequest
 	if err := requests.DecodeBodyJSON(r, &req); err != nil {
 		return responses.BadRequest(fmt.Errorf("%s: %w", operation, err), "invalid body json")
 	}
