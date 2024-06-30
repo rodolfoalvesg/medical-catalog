@@ -17,6 +17,56 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/admin/v1/medical-catalog/categories": {
+            "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
+                "description": "Get all categories",
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Get all categories",
+                "responses": {
+                    "200": {
+                        "description": "Categories",
+                        "schema": {
+                            "$ref": "#/definitions/schema.GetCategoriesResponse"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "security": [
                     {
@@ -35,7 +85,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.CreateCategoryInput"
+                            "$ref": "#/definitions/schema.CreateCategoryRequest"
                         }
                     }
                 ],
@@ -111,7 +161,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Login successfully",
+                        "description": "Login created successfully",
                         "schema": {
                             "type": "string"
                         },
@@ -162,6 +212,44 @@ const docTemplate = `{
             }
         },
         "/admin/v1/medical-catalog/specialties": {
+            "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
+                "description": "Get all specialties",
+                "tags": [
+                    "Specialty"
+                ],
+                "summary": "Get all specialties",
+                "responses": {
+                    "200": {
+                        "description": "Specialties",
+                        "schema": {
+                            "$ref": "#/definitions/schema.GetSpecialtiesResponse"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "security": [
                     {
@@ -180,7 +268,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.CreateSpecialtyInput"
+                            "$ref": "#/definitions/schema.CreateSpecialtyRequest"
                         }
                     }
                 ],
@@ -313,7 +401,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "schema.CreateCategoryInput": {
+        "schema.CreateCategoryRequest": {
             "type": "object",
             "properties": {
                 "name": {
@@ -321,7 +409,7 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.CreateSpecialtyInput": {
+        "schema.CreateSpecialtyRequest": {
             "type": "object",
             "properties": {
                 "specialtyName": {
@@ -339,6 +427,34 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "schema.GetCategoriesResponse": {
+            "type": "object",
+            "properties": {
+                "category_id": {
+                    "type": "string"
+                },
+                "category_name": {
+                    "type": "string"
+                },
+                "created_by": {
+                    "type": "string"
+                }
+            }
+        },
+        "schema.GetSpecialtiesResponse": {
+            "type": "object",
+            "properties": {
+                "created_by": {
+                    "type": "string"
+                },
+                "specialty_id": {
+                    "type": "string"
+                },
+                "specialty_name": {
                     "type": "string"
                 }
             }

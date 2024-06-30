@@ -15,7 +15,7 @@ import (
 // @Description Otherwise it will return HTTP status code 409.
 // @Tags Category
 // @Security BearerToken
-// @Param Body body schema.CreateCategoryInput true "Category input"
+// @Param Body body schema.CreateCategoryRequest true "Category input"
 // @Success 200 {object} string "Category created successfully"
 // @Failure 400 {object} string "Invalid request body"
 // @Failure 409 {object} string "Category already exists"
