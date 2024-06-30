@@ -1,7 +1,7 @@
 package user
 
 import (
-	"back-platform/app/domain/usecases"
+	"back-platform/app/domain/entities/user"
 	"context"
 	"fmt"
 )
@@ -11,10 +11,10 @@ const _createUserQuery = `
 	VALUES ($1, $2, $3)
 	`
 
-func (r Repository) CreateUser(ctx context.Context, input usecases.CreateUserInput) error {
+func (r Repository) CreateUser(ctx context.Context, user user.User) error {
 	const operation = "UserRepository.CreateUser"
 
-	_, err := r.db.Exec(context.Background(), _createUserQuery, input.Username, input.Email, input.Password)
+	_, err := r.db.Exec(context.Background(), _createUserQuery, user.Username, user.Email, user.Password)
 	if err != nil {
 		return fmt.Errorf("%s: %w", operation, err)
 	}

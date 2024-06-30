@@ -21,7 +21,7 @@ func (u Usecase) SignIn(ctx context.Context, input usecases.SignInInput) (string
 
 	userToken := auth.InputToken{
 		PublicID: userData.PublicID,
-		Name:     userData.Name,
+		Name:     userData.Username,
 		Email:    input.Email,
 	}
 

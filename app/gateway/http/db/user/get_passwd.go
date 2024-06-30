@@ -6,6 +6,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -16,7 +17,7 @@ const _getPasswdQuery = `
 		WHERE public_id = $1
 		`
 
-func (r *Repository) GetPasswd(ctx context.Context, userPublicID, password string) error {
+func (r *Repository) GetPasswd(ctx context.Context, userPublicID uuid.UUID, password string) error {
 	const operation = "UserRepository.ValidateUserPassword"
 
 	var storedPassword string
