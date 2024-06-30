@@ -68,6 +68,7 @@ func newHandler(_ config.Config, db *pgxpool.Pool) (http.Handler, error) {
 
 		r.Route("/categories", func(r chi.Router) {
 			r.Post("/", rest.Handle(categoryHandler.CreateCategory))
+			r.Get("/", rest.Handle(categoryHandler.GetCategories))
 		})
 
 		r.Route("/login", func(r chi.Router) {
