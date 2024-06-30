@@ -17,7 +17,7 @@ import (
 // @Description Otherwise it will return HTTP status code 409.
 // @Tags Specialty
 // @Security BearerToken
-// @Param Body body schema.CreateSpecialtyInput true "Specialty input"
+// @Param Body body schema.CreateSpecialtyRequest true "Specialty input"
 // @Success 200 {object} string "Specialty created successfully"
 // @Failure 400 {object} string "Invalid request body"
 // @Failure 409 {object} string "Specialty already exists"

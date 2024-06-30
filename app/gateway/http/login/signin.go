@@ -10,12 +10,12 @@ import (
 	"net/http"
 )
 
-// SignIn creates a new login.
+// SignIn creates a new login.s
 // @Summary Create a new login
 // @Description Create a new login to access the system.
 // @Tags Login
 // @Param Body body schema.SignInInput true "Login input"
-// @Success 200 {object} string "Login successfully"
+// @Success 200 {object} string "Login created successfully"
 // @Failure 400 {object} string "Invalid request body"
 // @Failure 401 {object} string "Invalid email or password"
 // @Failure 500 {object} string "Internal server error"
