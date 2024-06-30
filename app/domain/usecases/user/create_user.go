@@ -1,6 +1,7 @@
 package user
 
 import (
+	"back-platform/app/domain/entities/user"
 	"back-platform/app/domain/usecases"
 	"context"
 	"fmt"
@@ -9,7 +10,13 @@ import (
 func (u Usecase) CreateUser(ctx context.Context, input usecases.CreateUserInput) error {
 	const operation = "UserUsecase.CreateUser"
 
-	if err := u.repository.CreateUser(ctx, input); err != nil {
+	user := user.User{
+		Username: input.Username,
+		Password: input.Password,
+		Email:    input.Email,
+	}
+
+	if err := u.repository.CreateUser(ctx, user); err != nil {
 		return fmt.Errorf("%s: %w", operation, err)
 	}
 

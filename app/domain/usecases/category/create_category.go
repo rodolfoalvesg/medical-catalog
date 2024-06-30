@@ -1,6 +1,7 @@
 package category
 
 import (
+	"back-platform/app/domain/entities/category"
 	"back-platform/app/domain/usecases"
 	"context"
 	"fmt"
@@ -9,7 +10,12 @@ import (
 func (u Usecase) CreateCategory(ctx context.Context, input usecases.CreateCategoryInput) error {
 	const operation = "CategoryUsecase.CreateCategory"
 
-	if err := u.repository.CreateCategory(ctx, input); err != nil {
+	category := category.Category{
+		Name:      input.CategoryName,
+		CreatedBy: input.CreatedBy,
+	}
+
+	if err := u.repository.CreateCategory(ctx, category); err != nil {
 		return fmt.Errorf("%s: %w", operation, err)
 	}
 

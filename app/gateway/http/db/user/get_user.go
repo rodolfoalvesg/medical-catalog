@@ -1,7 +1,7 @@
 package user
 
 import (
-	"back-platform/app/domain/usecases"
+	"back-platform/app/domain/entities/user"
 	"back-platform/app/domain/vos"
 	"context"
 	"database/sql"
@@ -16,17 +16,17 @@ const _getUserQuery = `
 		WHERE email = $1
 	`
 
-func (r *Repository) GetUser(ctx context.Context, email string) (usecases.SignInOutput, error) {
+func (r *Repository) GetUser(ctx context.Context, email string) (user.User, error) {
 	const operation = "UserRepository.GetUser"
 
-	var userData usecases.SignInOutput
-	if err := r.db.QueryRow(ctx, _getUserQuery, email).Scan(&userData.PublicID, &userData.Name); err != nil {
+	var userStored user.User
+	if err := r.db.QueryRow(ctx, _getUserQuery, email).Scan(&userStored.PublicID, &userStored.Username); err != nil {
 		if err == sql.ErrNoRows {
-			return usecases.SignInOutput{}, fmt.Errorf("%s: %w", operation, vos.ErrUserNotFound)
+			return user.User{}, fmt.Errorf("%s: %w", operation, vos.ErrUserNotFound)
 		}
 
-		return usecases.SignInOutput{}, fmt.Errorf("%s: %w", operation, err)
+		return user.User{}, fmt.Errorf("%s: %w", operation, err)
 	}
 
-	return userData, nil
+	return userStored, nil
 }

@@ -1,7 +1,7 @@
 package category
 
 import (
-	"back-platform/app/domain/usecases"
+	"back-platform/app/domain/entities/category"
 	"context"
 	"fmt"
 )
@@ -11,10 +11,10 @@ const _createCategoryQuery = `
 	values ($1, $2, $3)
 `
 
-func (r Repository) CreateCategory(ctx context.Context, input usecases.CreateCategoryInput) error {
+func (r Repository) CreateCategory(ctx context.Context, input category.Category) error {
 	const operation = "CategoryRepository.CreateCategory"
 
-	_, err := r.db.Exec(ctx, _createCategoryQuery, input.CategoryName, input.CreatedBy, input.CreatedBy)
+	_, err := r.db.Exec(ctx, _createCategoryQuery, input.Name, input.CreatedBy, input.CreatedBy)
 	if err != nil {
 		return fmt.Errorf("%s: %w", operation, err)
 	}

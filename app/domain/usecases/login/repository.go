@@ -1,11 +1,13 @@
 package login
 
 import (
-	"back-platform/app/domain/usecases"
+	"back-platform/app/domain/entities/user"
 	"context"
+
+	"github.com/google/uuid"
 )
 
 type LoginRepository interface {
-	GetPasswd(ctx context.Context, userID, password string) error
-	GetUser(ctx context.Context, email string) (usecases.SignInOutput, error)
+	GetPasswd(ctx context.Context, userID uuid.UUID, password string) error
+	GetUser(ctx context.Context, email string) (user.User, error)
 }

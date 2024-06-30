@@ -5,10 +5,11 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/google/uuid"
 )
 
 type InputToken struct {
-	PublicID string
+	PublicID uuid.UUID
 	Name     string
 	Email    string
 }
