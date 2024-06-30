@@ -211,6 +211,69 @@ const docTemplate = `{
                 }
             }
         },
+        "/admin/v1/medical-catalog/partners": {
+            "post": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
+                "description": "Create a new partner",
+                "tags": [
+                    "Partner"
+                ],
+                "summary": "Create a new partner",
+                "parameters": [
+                    {
+                        "description": "Partner input",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.CreatePartnerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Partner created successfully",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "headers": {
+                            "RequestID": {
+                                "type": "string",
+                                "description": "x-request-id"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/admin/v1/medical-catalog/specialties": {
             "get": {
                 "security": [
@@ -405,6 +468,47 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "schema.CreatePartnerRequest": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "cel_phone": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "complement": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "neighborhood": {
+                    "type": "string"
+                },
+                "number": {
+                    "type": "string"
+                },
+                "partner_name": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "reference": {
+                    "type": "string"
+                },
+                "uf": {
+                    "type": "string"
+                },
+                "zip_code": {
                     "type": "string"
                 }
             }

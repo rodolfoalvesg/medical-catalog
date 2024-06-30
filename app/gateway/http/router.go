@@ -4,13 +4,16 @@ import (
 	"back-platform/app/config"
 	categoryUsecase "back-platform/app/domain/usecases/category"
 	loginUsecase "back-platform/app/domain/usecases/login"
+	partnerUsecase "back-platform/app/domain/usecases/partner"
 	specialtyUsecase "back-platform/app/domain/usecases/specialty"
 	userUsecase "back-platform/app/domain/usecases/user"
 	categoryHandler "back-platform/app/gateway/http/category"
 	categoryRepo "back-platform/app/gateway/http/db/category"
+	partnerRepo "back-platform/app/gateway/http/db/partner"
 	specialtyRepository "back-platform/app/gateway/http/db/specialty"
 	userRepository "back-platform/app/gateway/http/db/user"
 	loginHandler "back-platform/app/gateway/http/login"
+	"back-platform/app/gateway/http/partner"
 	"back-platform/app/gateway/http/rest"
 	specialtyHandler "back-platform/app/gateway/http/specialty"
 	userHandler "back-platform/app/gateway/http/user"
@@ -60,6 +63,10 @@ func newHandler(_ config.Config, db *pgxpool.Pool) (http.Handler, error) {
 	categoryUsecase := categoryUsecase.NewUsecase(categoryRepo)
 	categoryHandler := categoryHandler.NewHandler(categoryUsecase)
 
+	partnerRepo := partnerRepo.NewRepository(db)
+	partnerUsecase := partnerUsecase.NewUsecase(partnerRepo)
+	partnerHandler := partner.NewHandler(partnerUsecase)
+
 	r.Route("/admin/v1/medical-catalog", func(r chi.Router) {
 		r.Route("/specialties", func(r chi.Router) {
 			r.Post("/", rest.Handle(specialtyHandler.CreateSpecialty))
@@ -69,6 +76,10 @@ func newHandler(_ config.Config, db *pgxpool.Pool) (http.Handler, error) {
 		r.Route("/categories", func(r chi.Router) {
 			r.Post("/", rest.Handle(categoryHandler.CreateCategory))
 			r.Get("/", rest.Handle(categoryHandler.GetCategories))
+		})
+
+		r.Route("/partners", func(r chi.Router) {
+			r.Post("/", rest.Handle(partnerHandler.CreatePartner))
 		})
 
 		r.Route("/login", func(r chi.Router) {
