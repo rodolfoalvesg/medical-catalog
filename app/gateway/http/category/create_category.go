@@ -25,7 +25,7 @@ import (
 func (h Handler) CreateCategory(r *http.Request) responses.Response {
 	const operation = "CategoryHandler.CreateCategory"
 
-	var req schema.CreateCategoryInput
+	var req schema.CreateCategoryRequest
 	if err := requests.DecodeBodyJSON(r, &req); err != nil {
 		return responses.BadRequest(fmt.Errorf("%s: %w", operation, err), "invalid request body")
 	}
