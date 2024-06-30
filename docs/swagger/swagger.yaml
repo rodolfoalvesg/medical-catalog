@@ -5,6 +5,33 @@ definitions:
       name:
         type: string
     type: object
+  schema.CreatePartnerRequest:
+    properties:
+      address:
+        type: string
+      cel_phone:
+        type: string
+      city:
+        type: string
+      complement:
+        type: string
+      email:
+        type: string
+      neighborhood:
+        type: string
+      number:
+        type: string
+      partner_name:
+        type: string
+      phone:
+        type: string
+      reference:
+        type: string
+      uf:
+        type: string
+      zip_code:
+        type: string
+    type: object
   schema.CreateSpecialtyRequest:
     properties:
       specialtyName:
@@ -177,6 +204,46 @@ paths:
       summary: Create a new login
       tags:
       - Login
+  /admin/v1/medical-catalog/partners:
+    post:
+      description: Create a new partner
+      parameters:
+      - description: Partner input
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/schema.CreatePartnerRequest'
+      responses:
+        "200":
+          description: Partner created successfully
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+        "400":
+          description: Invalid request body
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          headers:
+            RequestID:
+              description: x-request-id
+              type: string
+          schema:
+            type: string
+      security:
+      - BearerToken: []
+      summary: Create a new partner
+      tags:
+      - Partner
   /admin/v1/medical-catalog/specialties:
     get:
       description: Get all specialties
