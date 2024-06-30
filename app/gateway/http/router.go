@@ -63,6 +63,7 @@ func newHandler(_ config.Config, db *pgxpool.Pool) (http.Handler, error) {
 	r.Route("/admin/v1/medical-catalog", func(r chi.Router) {
 		r.Route("/specialties", func(r chi.Router) {
 			r.Post("/", rest.Handle(specialtyHandler.CreateSpecialty))
+			r.Get("/", rest.Handle(specialtyHandler.GetSpecialties))
 		})
 
 		r.Route("/categories", func(r chi.Router) {
